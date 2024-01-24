@@ -33,7 +33,8 @@ const roll = (reel, offset = 0, fixedDelta) => {
 };
 
 function rollAll() {
-    const fixedDeltas = [4, 5, 9, 3, 3, 3]; 
+    
+    const fixedDeltas = [6,8,6,8,6,8]; 
 
     const reelsList = document.querySelectorAll('.slots > .reel_bg > .reel');
 
