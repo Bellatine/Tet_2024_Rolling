@@ -1,0 +1,266 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jan 25, 2024, 8:57:27 PM
+    Author     : Admin
+*/
+
+header {
+  background-image: url("./img/bg_header.png");
+  background-position: center; 
+  background-size: contain;
+  border-radius: 0 0 10px 10px;
+  color: white;
+  text-align: left;
+  padding: 1em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 15%;
+}
+
+body {
+  background-image: url("./img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex-direction: column;
+}
+
+.prize-select select {
+    /* Ẩn giao diện mặc định của select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Thiết lập kích thước và ảnh nền */
+    width: 100px;
+    height: 50px;
+    padding: 5px;
+    font-size: 20px;
+    color: #FFC400;
+    background: url('./img/select.png') no-repeat right center;
+    background-size: cover; /* Kích thước của ảnh select.png */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer; /* Hiển thị cursor nhấp chuột khi hover */
+}
+
+/* CSS để thay đổi giao diện của option khi hover */
+.prize-select select:hover {
+    border-color: #555;
+}
+
+/* CSS để thay đổi giao diện của option khi focus */
+.prize-select select:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.prize-select select option {
+    background: url('./img/select.png') no-repeat left center; /* Đường dẫn tới ảnh nền của option */
+    padding-left: 25px; /* Đảm bảo văn bản không bị che bởi hình nền */
+}
+
+.slots.win1 {
+  animation: win1 200ms steps(2, end) infinite;
+}
+
+@keyframes win1 {
+  0% {
+    background: linear-gradient(45deg, orange 0%, yellow 100%);
+    box-shadow: 0 0 80px orange;
+  }
+  100% {
+    background: linear-gradient(45deg, grey 0%, lightgrey 100%);
+    box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+button {
+  color: white; 
+  font-size: 18px; 
+  width: 150px; 
+  height: 96px; 
+  background-color: inherit;
+  background-image: url("./img/button.png");
+  background-size: cover; 
+  border: none; 
+  cursor: pointer; 
+  margin-top: 20px;
+  transition: box-shadow 0.3s ease; 
+  position: absolute;
+  top: 380px;
+  left: 190px;
+}
+.scene {
+  font-family: "Open Sans";
+}
+#lottery {
+  position: relative;
+}
+#ball-place {
+  position: absolute;
+  top: 140px;
+  left: 40%;
+}
+
+.lottery-machine {
+  margin-top: 120px;
+  position: absolute;
+  border-radius: 50%;
+  left: 190px;
+  width: 200px;
+  height: 215px;  
+}
+.lottery-machine-canvas {
+  position: absolute;
+  left: 8px;
+  top: 23px;
+  width: 140px;
+  height: 140px;
+  padding: 7px;
+  border-radius: inherit;
+  box-sizing: border-box;
+  transition: opacity 0.7s;
+}
+.lottery-machine::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 23px;
+  width: 140px;
+  height: 140px;
+  background-color: rgba(85, 177, 201, .2);
+  border: 7px solid #EF4040;
+  border-radius: inherit;
+  box-sizing: border-box;
+  transition: opacity 0.7s;
+}
+.lottery-machine.disabled .lottery-machine-canvas {
+  opacity: 0;
+  pointer-events: none;
+}
+.lottery-machine.disabled::after {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lottery-machine .lottery-lever {
+  position: absolute;
+  background-image: url('https://svgur.com/i/DGD.svg');
+  width: 52px;
+  height: 23px;
+  left: 149px;
+  top: 176px;
+  transition: transform 0.5s;
+  transform-origin: left center;
+}
+
+.lottery-machine .lottery-lever.hover {
+  transform: rotate(-10deg);
+}
+.lottery-machine .lottery-lever.down {
+  transform: rotate(15deg);
+}
+
+.lottery-machine .lottery-right-door, .lottery-machine .lottery-left-door {
+  position: absolute;
+  background-image: url('https://svgur.com/i/DJ5.svg');
+  width: 32px;
+  height: 29px;
+  left: 77px;
+  top: 173px;
+  z-index: 4;
+  transition: left 0.75s;
+}
+.lottery-machine .lottery-right-door.animation, .lottery-machine .lottery-left-door.animation {
+  left: 101px;
+}
+.lottery-machine .lottery-left-door {
+  background-image: url('https://svgur.com/i/DHF.svg');
+  left: 46px;
+}
+.lottery-machine .lottery-left-door.animation {
+  left: 20px;
+}
+.lottery-machine .lottery-lift {
+  position: absolute;
+  background-color: #abe9f4;
+  width: 14px;
+  height: 0;
+  left: 71px;
+  top: 196px;
+  box-sizing: border-box;
+  border: 1px solid #ddeff3;
+  border-radius: 2px;
+  transition: top 1s, height 1s;
+}
+.lottery-machine .lottery-lift.animation {
+  top: 23px;
+  height: 173px;
+}
+.lottery-machine .lottery-ball {
+  width: 18px;
+  height: 18px;
+  line-height: 1.375;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border-radius: 50%;
+  position: absolute;
+  left: 69px;
+  top: 178px;
+  transition: top 1s, transform 0.75s ease-in;
+}
+.lottery-machine .lottery-ball.invisible {
+  opacity: 0;
+}
+.lottery-machine .lottery-ball.animation-up {
+  top: 5px;
+}
+.lottery-machine .lottery-ball.animation-roll {
+  transform-origin: 9px 88px;
+  transform: rotate(180deg);
+}
+.lottery-machine .lottery-ball.blink:after {
+  content: '';
+  background-color: #fff;
+  position: absolute;
+  left: 10px;
+  top: 4px;
+  width: 4px;
+  height: 4px;
+  transform-origin: 0 0;
+  transform: rotate(0);
+}
+.lottery-machine .lottery-ball.no-transition {
+  transition: none;
+}
+.lottery-machine .lottery-hover-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 214px;
+  width: 100%;
+  z-index: 5;
+}
+.lottery-ball.clone {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  font-size: 12px;
+  line-height: 1.375;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lottery-ball.clone.invisible {
+  opacity: 0;
+}
+.lottery-ball.clone.no-transition {
+  transition: none;
+}
