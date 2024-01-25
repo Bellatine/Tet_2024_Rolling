@@ -22,13 +22,13 @@ async function fetchDataEmployee(url) {
 }
 
 let employeeWinner;
-fetchDataEmployee('http://localhost:8082/api/v1/lottery/winner-employee-data')
-  .then(data => {
-    employeeWinner = data;
-  })
-  .catch(error => {
-    console.error('Lỗi:', error);
-  });
+//fetchDataEmployee('http://localhost:8082/api/v1/lottery/all-employee-data')
+//  .then(data => {
+//    employeeWinner = data;
+//  })
+//  .catch(error => {
+//    console.error('Lỗi:', error);
+//  });
 
 const roll = (reel, offset = 0, fixedDelta) => {
     const delta = (offset + 2) * num_icons + num_icons - fixedDelta + 1;
@@ -56,31 +56,42 @@ const roll = (reel, offset = 0, fixedDelta) => {
 
 function rollAll() {
     resetReels();
-    const fixedDeltas = Array.from(employeeWinner.employeeID); 
-    const prizeSelect = document.getElementById('prize');
-    const selectedOption = prizeSelect.options[prizeSelect.selectedIndex];
-    const selectedValue = selectedOption.value;
-    const selectedText = selectedOption.text;
-
-    employeeWinner.prize = selectedText;
     
-    const reelsList = document.querySelectorAll('.slots > .reel_bg > .reel');
+    // Gọi lại hàm fetchDataEmployee để lấy dữ liệu mới từ API
+    fetchDataEmployee('http://localhost:8082/api/v1/lottery/all-employee-data')
+        .then(data => {
+            // Lưu dữ liệu mới vào employeeWinner
+            employeeWinner = data;
 
-    Promise
-        .all([...reelsList].map((reel, i) => roll(reel, i, fixedDeltas[i])))
-        .then((deltas) => {
-            deltas.forEach((delta, i) => indexes[i] = (indexes[i] + delta) % num_icons);
-            
-            document.querySelector(".slots").classList.add("win1");
-            setTimeout(() => {
-                document.querySelector(".slots").classList.remove("win1");
-                showResultDialog(employeeWinner);
-                // Hiển thị dialog SweetAlert2 sau khi cuộc quay kết thúc
-                
-            }, 2000);
+            const fixedDeltas = Array.from(employeeWinner.employeeID); 
+            const prizeSelect = document.getElementById('prize');
+            const selectedOption = prizeSelect.options[prizeSelect.selectedIndex];
+            const selectedValue = selectedOption.value;
+            const selectedText = selectedOption.text;
 
+            employeeWinner.prize = selectedText;
+
+            const reelsList = document.querySelectorAll('.slots > .reel_bg > .reel');
+
+            Promise
+                .all([...reelsList].map((reel, i) => roll(reel, i, fixedDeltas[i])))
+                .then((deltas) => {
+                    deltas.forEach((delta, i) => indexes[i] = (indexes[i] + delta) % num_icons);
+                    
+                    document.querySelector(".slots").classList.add("win1");
+                    setTimeout(() => {
+                        document.querySelector(".slots").classList.remove("win1");
+                        showResultDialog(employeeWinner);
+                        // Hiển thị dialog SweetAlert2 sau khi cuộc quay kết thúc
+                        
+                    }, 2000);
+                });
+        })
+        .catch(error => {
+            console.error('Lỗi khi lấy dữ liệu:', error);
         });
-};
+}
+
 
 function resetReels() {
     const reelsList = document.querySelectorAll('.slots > .reel_bg > .reel');
