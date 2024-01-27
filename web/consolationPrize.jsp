@@ -22,12 +22,17 @@
                 <option value="giai1" style="font-size: 20px; color: #FF0000; background-color: inherit;">Giải Nhất</option>
                 <option value="giai2" style="font-size: 20px; color: #FF0000; background-color: inherit;">Giải Nhì</option>
                 <option value="giai3" style="font-size: 20px; color: #FF0000; background-color: inherit;">Giải Ba</option>
-                <!-- Thêm các option khác nếu cần -->
+                 Thêm các option khác nếu cần 
             </select>
         </div>
-        <div class="scene">
+        <div class="scene" id="scene">
             <div id="ball-place"></div> 
+            
+
             <button id="play">Quay</button>
+            
+
+            
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>

@@ -2,7 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
+//**************** NEW CODE ****************
+let topPx = 0;// biến cộng thêm top cho bóng
+let topDivContainEmployeeInfo = 45;
+let employeeWinner;
+let count = 0; // Biến đếm 
 // LotteryMachine Class
+async function fetchDataEmployee(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Lấy dữ liệu không thành công');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Đã xảy ra lỗi:', error);
+    throw error;
+  }
+}
+
+fetchDataEmployee('http://localhost:8082/api/v1/lottery/list-winner-employee-data')
+  .then(data => {
+    employeeWinner = data;
+  })
+  .catch(error => {
+    console.error('Lỗi:', error);
+  });
+//**************** NEW CODE ****************
 class LotteryMachine {
   constructor(opt = {}) {
     let _def
@@ -345,80 +372,92 @@ class LotteryMachine {
   rollBallOut(parent, placeForBall, animationOpt, callback){  
     const { ball, lift, rightDoor, leftDoor } = this.views;  
     const randomColor = this.opt.ball.colors[Math.floor(Math.random() * this.opt.ball.colors.length)];
-    const randomNumber = [Math.floor(Math.random() * 100)];
-           
-    ball    
-      .removeClass("no-transition")
-      .attr('style', '')
-      .html('')
-      .css({ backgroundColor: randomColor })       
-      .addClass("blink"); 
+    const randomNumber = employeeWinner[count].employeeID;
+    topPx += 80;
+    const newDiv = document.createElement("div");
     
-    function liftBallUp(){      
-      return new Promise(resolve => { 
-        ball.addClass('animation-up');
-        lift.addClass("animation");        
-        setTimeout(resolve, 1000);
-      });
-    }
+    // tạo div chứa thông tin nhân viên
+    const newContent = document.createTextNode(`${employeeWinner[count].employeeID}   -   ${employeeWinner[count].name}   -   ${employeeWinner[count].email}`);
+    newDiv.appendChild(newContent);
+    newDiv.setAttribute("style", `background-color: #fff; border-radius: 5px; padding: 5px; color: #EA0029; top: 363px; left: 279px; font-weight: 600; font-size: 1.8rem; transform: matrix(1, 0, 0, 1, 300, ${-(356 - topPx)}); display: flex; z-index: 100; position: absolute; width: 300; height: 60 !important`);
 
-    function liftBallDown(){
-      return new Promise(resolve => {
-        ball.addClass("animation-roll");
-        lift.removeClass("animation");
-        setTimeout(resolve, 1500);
-      });
-    }
     
-    function openDoors(){
-      return new Promise(resolve => {
-        ball.css({ zIndex: 2 })
-            .html(randomNumber)
-            .addClass("no-transition")
-            .removeClass("blink animation-roll animation-up"); 
+        ball    
+          .removeClass("no-transition")
+          .attr('style', '')
+          .html('')
+          .css({ backgroundColor: randomColor })       
+          .addClass("blink"); 
 
-        rightDoor.addClass("animation");
-        leftDoor.addClass("animation");
+        function liftBallUp(){      
+          return new Promise(resolve => { 
+            ball.addClass('animation-up');
+            lift.addClass("animation");        
+            setTimeout(resolve, 1000);
+          });
+        }
 
-        setTimeout(resolve, 1000);
-      });
-    }
+        function liftBallDown(){
+          return new Promise(resolve => {
+            ball.addClass("animation-roll");
+            lift.removeClass("animation");
+            setTimeout(resolve, 1500);
+          });
+        }
 
-    function moveBallOut(){     
-      const startCoords = ball.offset();
-      const endCoords = placeForBall.offset();
+        function openDoors(){
+          return new Promise(resolve => {
+            ball.css({ zIndex: 2 })
+                .html(randomNumber)
+                .addClass("no-transition")
+                .removeClass("blink animation-roll animation-up"); 
 
-      const animatedBall = ball
-        .clone()
-        .addClass('clone')
-        .css(startCoords)
-        .appendTo(parent);
+            rightDoor.addClass("animation");
+            leftDoor.addClass("animation");
 
-      return new Promise(resolve => {  
-        TweenMax.to(animatedBall, 1, {
-          ...animationOpt,         
-          x: -(startCoords.left - endCoords.left),
-          y: -(startCoords.top - endCoords.top),    
-          ease: Power2.easeInOut,
-          parseTransform: true,  
-          onStart: () => {
-            ball.css({opacity: 0});
-            animatedBall.css({zIndex: 100})
-          },    
-          onComplete: () => {
-            rightDoor.removeClass("animation");
-            leftDoor.removeClass("animation");            
-            resolve();
-          }         
-        });      
-      })    
-    }
- 
-    liftBallUp()
-      .then(() => liftBallDown())
-      .then(() => openDoors())
-      .then(() => moveBallOut())
-      .then(() => setTimeout(callback, 1000));
+            setTimeout(resolve, 1000);
+          });
+        }
+
+        function moveBallOut(){     
+          const startCoords = ball.offset();
+          const endCoords = placeForBall.offset();
+
+          const animatedBall = ball
+            .clone()
+            .addClass('clone')
+            .css(startCoords)
+            .appendTo(parent);
+          
+
+          return new Promise(resolve => {  
+            TweenMax.to(animatedBall, 1, {
+              ...animationOpt,         
+    // mặc định x là 200 px ứng với chiều ngang
+              x: 200,
+              y: -(startCoords.top - topPx),    
+              ease: Power2.easeInOut,
+              parseTransform: true,  
+              onStart: () => {
+                ball.css({opacity: 0});
+                animatedBall.css({zIndex: 100});
+              },    
+              onComplete: () => {
+                rightDoor.removeClass("animation");
+                leftDoor.removeClass("animation");  
+                // insert thông tin nhân viên trúng giải
+                document.getElementById("scene").insertAdjacentElement("afterbegin", newDiv);
+                resolve();
+              }         
+            });      
+          });    
+        }
+
+        liftBallUp()
+          .then(() => liftBallDown())
+          .then(() => openDoors())
+          .then(() => moveBallOut())
+          .then(() => setTimeout(callback, 1000));
   } 
 
   // Добавить экзмепляр в DOM-дерево
@@ -452,21 +491,38 @@ class LotteryMachine {
 const $scene = $('.scene');
 const $ballPlace = $('#ball-place');
 const $button = $('button#play');
+// kích thước quả bóng
 const ballAnimationOpt = {
-  width: 70,
-  height: 70,
-  fontSize: 32
+  width: 60,
+  height: 60,
+  fontSize: 18
 };
 
 // init LotteryMachine
 const lotteryMachine = new LotteryMachine();
 lotteryMachine.draw($scene);
 
+
+
 const handleClick = () => {
   $button.off('click');
+
   lotteryMachine
     .play()
-    .then(() => lotteryMachine.rollBallOut($scene, $ballPlace, ballAnimationOpt, () => $button.on('click', handleClick)));
+    .then(() => {
+      lotteryMachine.rollBallOut($scene, $ballPlace, ballAnimationOpt, () => {
+        count++; // Tăng biến đếm lên 1 sau khi chạy hàm
+        if (count < 10) {
+          handleClick(); // Gọi lại hàm handleClick để chạy lần tiếp theo
+        } else {
+          $button.on('click', handleClick); // Gán lại sự kiện click cho nút sau khi hoàn thành 10 lần
+        }
+      });
+    })
+    .catch((error) => {
+      console.error(error); // Xử lý lỗi nếu có
+      $button.on('click', handleClick); // Gán lại sự kiện click cho nút trong trường hợp xảy ra lỗi
+    });
 };
 
 $button.on('click', handleClick);
