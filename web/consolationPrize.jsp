@@ -17,7 +17,7 @@
                 <image src="./img/logo_viettel.png" style="height: 2.5rem; padding-top: 5px; padding-left: 20px"/>
         </header>
         <div class="prize-select">
-            <label for="prize" style="font-size: 25px; color: #FF0000;">Chọn số lượng giải:</label>
+            <label for="prize">Chọn số lượng giải:</label>
             <select id="employeeCountSelect">
                 <option value="1">1</option>
                 <option value="2">2</option>

@@ -33,9 +33,6 @@ body {
   background-size: cover;
 }
 
-#employeeCountSelect{
-    margin-top: 200px
-}
 
 .slots.win1 {
   animation: win1 200ms steps(2, end) infinite;
@@ -54,6 +51,7 @@ body {
 
 
 #play {
+    
   color: white; 
   font-size: 18px; 
   width: 150px; 
@@ -260,6 +258,12 @@ body {
   transition: none;
 }
 
+.prize-select label {
+    padding-left: 30px;
+    font-size: 25px; 
+    color: #FF0000;
+}
+
 .prize-select select {
     /* Ẩn giao diện mặc định của select */
     -webkit-appearance: none;
@@ -293,4 +297,16 @@ body {
 .prize-select select option {
     background: url('./img/select.png') no-repeat left center; /* Đường dẫn tới ảnh nền của option */
     padding-left: 25px; /* Đảm bảo văn bản không bị che bởi hình nền */
+}
+
+#employeeCountSelect{
+    margin-top: 170px;
+    margin-bottom: 35px;
+}
+
+#save-all-btn{
+    background: url('./img/select.png'); 
+    margin-left: 10px;
+    background-size: contain; 
+    border-radius: 3px; color: #FFFF00;
 }

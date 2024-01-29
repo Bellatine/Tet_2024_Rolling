@@ -368,25 +368,29 @@ class LotteryMachine {
   }
 
   // animation of rolling ball out of machine
-  rollBallOut(parent, placeForBall, animationOpt, callback){  
+  rollBallOut(parent, placeForBall, animationOpt, employeeWinner, count, callback){  
     const { ball, lift, rightDoor, leftDoor } = this.views;  
     const randomColor = this.opt.ball.colors[Math.floor(Math.random() * this.opt.ball.colors.length)];
     const randomNumber = employeeWinner[count].employeeID;
+    
     topPx += 80;
 //    const div = document.createElement("div");
     
     const newDiv = document.createElement("div");
 //    div.appendChild(newDiv);
     // tạo div chứa thông tin nhân viên
-    const newContent = document.createTextNode(`${employeeWinner[count].employeeID}   -   ${employeeWinner[count].name}   -   ${employeeWinner[count].email}`);
+    const newContent = document.createTextNode(`${employeeWinner[count].employeeID}   -   ${employeeWinner[count].name}   -   ${employeeWinner[count].email}   -   ${employeeWinner[count].unit}`);
     newDiv.appendChild(newContent);
     newDiv.setAttribute("class", "info-employee");
-    newDiv.setAttribute("style", `background-color: #fff; border-radius: 5px; padding: 5px; color: #EA0029; top: 363px; left: 279px; font-weight: 600; font-size: 1.8rem; transform: matrix(1, 0, 0, 1, 300, ${-(356 - topPx)}); display: flex; z-index: 100; position: absolute; width: 300; height: 60 !important`);
+    newDiv.setAttribute("style", `background-color: #fff; border-radius: 5px; border-color: #EA0029; padding: 5px; color: #EA0029; top: 363px; left: 279px; font-weight: 600; font-size: 1.8rem; transform: matrix(1, 0, 0, 1, 300, ${-(356 - topPx)}); display: flex; z-index: 100; position: absolute; width: 300; height: 60 !important`);
     
-//    const btnSendInfo = document.createElement("button");
-//    btnSendInfo.textContent = "Lưu";
-//    btnSendInfo.addEventListener("click", () => saveResultToApi(employeeWinner[count]));
-//    div.appendChild(btnSendInfo);
+    const btnSendInfo = document.createElement("button");
+    btnSendInfo.setAttribute("class", "save-btn");
+    btnSendInfo.setAttribute("style", `background: url('./img/select.png'); margin-left: 10px; background-size: contain; border-radius: 3px;  color: #FFFF00;`);
+
+    btnSendInfo.textContent = "Lưu";
+    btnSendInfo.addEventListener("click", () => saveResultToApi(employeeWinner[count]));
+    newDiv.appendChild(btnSendInfo);
         
         ball    
           .removeClass("no-transition")
@@ -510,6 +514,7 @@ lotteryMachine.draw($scene);
 
 
 
+
 const handleClick = () => {
   $button.off('click');
   fetchDataEmployee('http://localhost:8082/api/v1/lottery/list-winner-employee-data')
@@ -528,7 +533,7 @@ function onShowHandleClick(selectedEmployeeCount ){
     lotteryMachine
         .play()
         .then(() => {
-          lotteryMachine.rollBallOut($scene, $ballPlace, ballAnimationOpt, () => {
+          lotteryMachine.rollBallOut($scene, $ballPlace, ballAnimationOpt, employeeWinner, count, () => {
             count++; // Tăng biến đếm lên 1 sau khi chạy hàm
             if (count < selectedEmployeeCount) {
               onShowHandleClick(selectedEmployeeCount); // Gọi lại hàm hansdleClick để chạy lần tiếp theo
@@ -562,6 +567,12 @@ function resetRoll() {
       infoEmployee.remove();
     });
     
+}
+
+function saveAllResultToApi(){
+    for (let i = 0; i < employeeWinner.length; i++) {
+        saveResultToApi(employeeWinner[i]);
+    }
 }
 
 
