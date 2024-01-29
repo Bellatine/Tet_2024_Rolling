@@ -94,8 +94,11 @@ body {
   position: relative;
 }
 #ball-place {
+  border-color: #FF0000;
+  
   position: absolute;
   top: 180px;
+  margin-top: 200px;
   left: 40%;
 }
 

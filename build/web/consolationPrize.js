@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 //**************** NEW CODE ****************
-let topPx = 0;// biến cộng thêm top cho bóng
+let topPx = 200;// biến cộng thêm top cho bóng
 let employeeWinner;
 let count = 0; // Biến đếm 
 // LotteryMachine Class
@@ -382,7 +382,7 @@ class LotteryMachine {
     const newContent = document.createTextNode(`${employeeWinner[count].employeeID}   -   ${employeeWinner[count].name}   -   ${employeeWinner[count].email}   -   ${employeeWinner[count].unit}`);
     newDiv.appendChild(newContent);
     newDiv.setAttribute("class", "info-employee");
-    newDiv.setAttribute("style", `background-color: #fff; border-radius: 5px; border-color: #EA0029; padding: 5px; color: #EA0029; top: 363px; left: 279px; font-weight: 600; font-size: 1.8rem; transform: matrix(1, 0, 0, 1, 300, ${-(356 - topPx)}); display: flex; z-index: 100; position: absolute; width: 300; height: 60 !important`);
+    newDiv.setAttribute("style", `background-color: #FF0000; border-radius: 5px; border-color: #000000; padding: 5px; color: #FFFFFF; top: 363px; left: 279px; font-weight: 600; font-size: 1.8rem; transform: matrix(1, 0, 0, 1, 300, ${-(356 - topPx)}); display: flex; z-index: 100; position: absolute; width: 300; height: 60 !important`);
     
     const btnSendInfo = document.createElement("button");
     btnSendInfo.setAttribute("class", "save-btn");
@@ -517,6 +517,7 @@ lotteryMachine.draw($scene);
 
 const handleClick = () => {
   $button.off('click');
+  count = 0;
   fetchDataEmployee('http://localhost:8082/api/v1/lottery/list-winner-employee-data')
     .then(data => {
       employeeWinner = data;

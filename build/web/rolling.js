@@ -4,7 +4,7 @@ const debugEl = document.getElementById('debug'),
     icon_width = 79,
     icon_height = 79,
     num_icons = 10,
-    time_per_icon = 100,
+    time_per_icon = 150,
     indexes = [0, 0, 0];
 
 async function fetchDataEmployee(url) {
@@ -25,7 +25,7 @@ let employeeWinner;
 
 
 const roll = (reel, offset = 0, fixedDelta) => {
-    const delta = (offset + 2) * num_icons + num_icons - fixedDelta + 1;
+    const delta = (offset + 2) * num_icons * 2 + num_icons - fixedDelta + 1;
 
     return new Promise((resolve, reject) => {
 

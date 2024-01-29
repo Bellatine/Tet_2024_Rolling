@@ -108,11 +108,11 @@ body {
 .slots .reel_bg .reel {
   position: relative;
   width: 79px;
-  height: 237px;
+  height: 184px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   overflow: hidden;
-  background-image: url("./img/rollnumber.jpg");
+  background-image: url("./img/rollnumber.png");
   background-size: cover;
   background-position: 0 0;
   background-repeat: repeat-y;
@@ -177,7 +177,7 @@ body {
     height: 50px;
     padding: 5px;
     font-size: 20px;
-    color: #FFC400;
+    color: #FFFFFF;
     background: url('./img/select.png') no-repeat right center;
     background-size: cover; /* Kích thước của ảnh select.png */
     border: 1px solid #ccc;
@@ -197,8 +197,8 @@ body {
 }
 
 .prize-select select option {
-    background: url('./img/select.png') no-repeat left center; /* Đường dẫn tới ảnh nền của option */
     padding-left: 25px; /* Đảm bảo văn bản không bị che bởi hình nền */
+    font-size: 20px; color: #0000FF; background-color: inherit;
 }
 
 
