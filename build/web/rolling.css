@@ -32,6 +32,8 @@ body {
   justify-content: center;
   align-items: center;
   background-image: url("./img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   flex-direction: column;
 }
 
@@ -140,7 +142,7 @@ body {
   font-weight: 700;
 }
 .roll-button {
-   color: white; 
+  color: white; 
   font-size: 18px; 
   width: 150px; 
   height: 96px; 

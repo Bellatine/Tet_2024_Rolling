@@ -22,13 +22,7 @@ async function fetchDataEmployee(url) {
 }
 
 let employeeWinner;
-//fetchDataEmployee('http://localhost:8082/api/v1/lottery/all-employee-data')
-//  .then(data => {
-//    employeeWinner = data;
-//  })
-//  .catch(error => {
-//    console.error('Lỗi:', error);
-//  });
+
 
 const roll = (reel, offset = 0, fixedDelta) => {
     const delta = (offset + 2) * num_icons + num_icons - fixedDelta + 1;
@@ -58,7 +52,7 @@ function rollAll() {
     resetReels();
     
     // Gọi lại hàm fetchDataEmployee để lấy dữ liệu mới từ API
-    fetchDataEmployee('http://localhost:8082/api/v1/lottery/all-employee-data')
+    fetchDataEmployee('http://localhost:8082/api/v1/lottery/winner-employee-data')
         .then(data => {
             // Lưu dữ liệu mới vào employeeWinner
             employeeWinner = data;
@@ -105,19 +99,17 @@ function resetReels() {
 function showResultDialog(employeeWinner) {
     Swal.fire({
         title: 'Chúc mừng!',
-        html: `
+        html: `<div id="tt" style="font-size: 26px; ">
             Bạn đã trúng ${employeeWinner.prize}:<br>
             <strong>${employeeWinner.name}</strong><br>
             ID: ${employeeWinner.employeeID}<br>
-            Email: ${employeeWinner.email}
+            Email: ${employeeWinner.email}<br>
+            Đơn vị: ${employeeWinner.unit}</div>
         `,
         icon: 'success',
         showCancelButton: true,
         confirmButtonText: 'Chấp nhận',
-        cancelButtonText: 'Hủy',
-        customClass: {
-            background: 'custom-swal-background'
-        },
+        cancelButtonText: 'Hủy'
         
     }).then((result) => {
         if (result.isConfirmed) {

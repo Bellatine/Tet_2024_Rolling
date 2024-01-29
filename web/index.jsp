@@ -27,12 +27,23 @@
     </header>
     <div class="prize-select win1">
         <label for="prize" style="font-size: 25px; color: #FF0000;">Chọn giải thưởng:</label>
-        <select id="prize" name="prize">
+        <select id="prize" name="prize" onchange="redirectToPage()">
             <option value="giai1" style="font-size: 20px; color: #FF0000; background-color: inherit;">Giải Nhất</option>
             <option value="giai2" style="font-size: 20px; color: #FF0000; background-color: inherit;">Giải Nhì</option>
             <option value="giai3" style="font-size: 20px; color: #FF0000; background-color: inherit;">Giải Ba</option>
+            <option value="giaiKK" style="font-size: 20px; color: #FF0000; background-color: inherit;">Giải KK</option>
             <!-- Thêm các option khác nếu cần -->
         </select>
+
+        <script>
+            function redirectToPage() {
+                var selectedValue = document.getElementById("prize").value;
+
+                if (selectedValue === "giaiKK") {
+                    window.location.href = "./consolationPrize.jsp";
+                }
+            }
+        </script>
     </div>
     <div class="slots">
         <div class="reel_bg">
